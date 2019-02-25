@@ -111,7 +111,7 @@ class XiCiProxyHelper(object):
         """
         pattern = r'(\d+).(\d+)'
         m = re.match(pattern, text)
-        delay = float(m[0])
+        delay = float(m.group(0))
         if delay > self.__threshold:
             return False
         else:

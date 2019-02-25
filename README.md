@@ -16,12 +16,12 @@ After installing all the dependencies in `requirements.txt`, type `python proxy 
 When you use the arguments `-d` to start server, server will automatic to load all config in default file `proxy.conf`. You can also pass your custom configuration file using `-c configpath`. The parameters are briefly described below.
 
 ```
-# Redis client config,
+# Redis client config
 [redis]
 host=localhost
 port=6379
 # If you has password, could remove the sharp
-# password=        
+# password=
 # If you want to modify default key, could remove the sharp
 key=hades_proxies
 
