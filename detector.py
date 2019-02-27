@@ -29,17 +29,18 @@ class Detector(object):
         async with aiohttp.ClientSession(connector=conn) as session:
             try:
                 test_proxy = '{}://{}:{}'.format(proxy.p_type, proxy.ip, proxy.port)
-                # print('{}    {}:{} 正在测试...'.format(datetime.now(), proxy.ip, proxy.port))
                 async with session.get(self.TEST_URL, proxy=test_proxy, timeout=15) as response:
                     if response.status == self.VALID_STATUS_CODE:
-                        self.__redis.increase(proxy.serializer(convert_to_json=True))
-                        # print('{}   {}:{} 可以访问'.format(datetime.now(), proxy.ip, proxy.port))
+                        self.__redis.increase(proxy.serializer(convert_to_json=True))        
                     else:
-                        self.__redis.decrease(proxy.serializer(convert_to_json=True))
-                        # print('{}   {}:{} 无效'.format(datetime.now(), proxy.ip, proxy.port))
-            except (ClientError, ClientConnectionError, ClientResponseError, TimeoutError):
+                        self.__redis.decrease(proxy.serializer(convert_to_json=True))     
+            except Exception:
+                #  2019年02月27日 22:51:05
+                # 这里修改为只要出现错误都直接decrease，因为会出错的Exceptions太多。
+                # 并且Xici上的代理多数不稳定。暂时先这样修改，如果有更好的建议请发邮件或者在issue底下提出感谢。
+                # email: geekhades1@gmail.com
                 self.__redis.decrease(proxy.serializer(convert_to_json=True))
-                # print('{}   {}:{} 无效'.format(datetime.now(), proxy.ip, proxy.port))
+                
 
     
     def run(self):
