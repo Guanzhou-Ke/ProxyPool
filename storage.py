@@ -8,6 +8,8 @@ from crawl import XiCiProxyHelper
 from datetime import datetime
 from random import choice
 
+DEBUG_MODE = False
+
 class RedisClient(object):
     """
     Proxies storage container
@@ -88,7 +90,8 @@ class RedisClient(object):
         else:
             # 2019年02月28日 11:40:29
             # 修复逻辑错误
-            print("{}    淘汰代理{}".format(datetime.now(), proxy_serializer))
+            if DEBUG_MODE:
+                print("{}    淘汰代理{}".format(datetime.now(), proxy_serializer))
             return self.__db.zrem(self.__REDIS_STORAGE_KEY, proxy_serializer)
     
 

@@ -9,7 +9,7 @@ import asyncio
 import time
 from asyncio import TimeoutError
 
-DEBUG = False
+DEBUG_MODE = False
 
 class Detector(object):
     """代理检测器"""
@@ -37,11 +37,11 @@ class Detector(object):
                 async with session.get(self.TEST_URL, proxy=test_proxy, timeout=15) as response:
                     if response.status == self.VALID_STATUS_CODE:
                         self.__redis.increase(proxy.serializer(convert_to_json=True))
-                        if DEBUG:
+                        if DEBUG_MODE:
                             print("<Debug>    {} 有效".format(proxy.ip))   
                     else:
                         self.__redis.decrease(proxy.serializer(convert_to_json=True)) 
-                        if DEBUG:
+                        if DEBUG_MODE:
                             print("<Debug>    {} 无效".format(proxy.ip))       
             except Exception:
                 #  2019年02月27日 22:51:05
@@ -49,7 +49,7 @@ class Detector(object):
                 # 并且Xici上的代理多数不稳定。暂时先这样修改，如果有更好的建议请发邮件或者在issue底下提出感谢。
                 # email: geekhades1@gmail.com
                 self.__redis.decrease(proxy.serializer(convert_to_json=True))
-                if DEBUG:
+                if DEBUG_MODE:
                             print("<Debug>    {} 无效".format(proxy.ip))
                 
 

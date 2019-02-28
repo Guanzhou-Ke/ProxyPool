@@ -1,9 +1,8 @@
 import sys, getopt
 from configparser import ConfigParser, NoOptionError
 from scheduler import Scheduler
-from storage import RedisClient
+from storage import RedisClient, Booter
 from crawl import XiCiProxyHelper
-from storage import Booter
 from detector import Detector
 from flask import Flask, g
 from datetime import datetime
@@ -28,6 +27,7 @@ GET_NUM = None
 THRESHOLD = None
 QUANTITY = None
 CAPACITY = None
+
 
 
 
@@ -66,6 +66,7 @@ def parse_config(path='proxy.conf'):
     global QUANTITY
     global THRESHOLD
     global CAPACITY
+    
 
     REDIS_HOST = try_to_get_options(cfg.get, 'redis', 'host')
     REDIS_PORT = try_to_get_options(cfg.getint, 'redis', 'port')
@@ -78,7 +79,7 @@ def parse_config(path='proxy.conf'):
     DETECTOR_MINUTE = try_to_get_options(cfg.getint, 'other', 'detector_minute')
     GETTER_MINUTE = try_to_get_options(cfg.getint, 'other', 'getter_minute')
     GET_NUM = try_to_get_options(cfg.getint, 'other', 'get_num')
-
+    
     QUANTITY = try_to_get_options(cfg.getint, 'proxy_setting', 'quantity')
     THRESHOLD = try_to_get_options(cfg.getfloat, 'proxy_setting', 'threshold')
     CAPACITY = try_to_get_options(cfg.getfloat, 'proxy_setting', 'capacity')
