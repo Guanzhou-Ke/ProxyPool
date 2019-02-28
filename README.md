@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This is a proxy server which can build quick and easy, it able to continuously obtain the lastest proxies by xici.com, and contining to diagnose existing proxies during runtime.
+This is a proxy server which can build quick and easy, it able to continuously obtain the lastest proxies by xici.com, and continuing to diagnose existing proxies during runtime.
 
 
 ## Quick Start
