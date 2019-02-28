@@ -6,6 +6,7 @@ from model import Proxy
 from p_exceptions import NotProxyError, PoolEmptyError
 from crawl import XiCiProxyHelper
 from datetime import datetime
+from random import choice
 
 class RedisClient(object):
     """
@@ -54,12 +55,14 @@ class RedisClient(object):
         获取num个较优的proxy。
         :param self:
         :param num: default 1, 返回个数
+        2019年02月28日 11:50:55
+        将筛选范围改为100-initial，不允许检测过无效的ip进入可选范围
         """
-        result = self.__db.zrevrangebyscore(self.__REDIS_STORAGE_KEY, self.__MAX_SCORE, self.__MIN_SCORE)
+        result = self.__db.zrevrangebyscore(self.__REDIS_STORAGE_KEY, self.__MAX_SCORE, self.__INITIAL_SCORE)
         if len(result):
             proxies = []
             for i in range(0, self.__num): 
-                proxies.append(Proxy().re_serialize(result[i]))
+                proxies.append(Proxy().re_serialize(choice(result)))
             return proxies
         else:
             raise PoolEmptyError
@@ -82,11 +85,11 @@ class RedisClient(object):
         score = self.__db.zscore(self.__REDIS_STORAGE_KEY, proxy_serializer)
         if score and score > self.__MIN_SCORE:
             return self.__db.zincrby(self.__REDIS_STORAGE_KEY, -1, proxy_serializer)
-        elif score <= self.__MIN_SCORE:
+        else:
+            # 2019年02月28日 11:40:29
+            # 修复逻辑错误
             print("{}    淘汰代理{}".format(datetime.now(), proxy_serializer))
             return self.__db.zrem(self.__REDIS_STORAGE_KEY, proxy_serializer)
-        else:
-            return 0
     
 
     def increase(self, proxy_serializer):

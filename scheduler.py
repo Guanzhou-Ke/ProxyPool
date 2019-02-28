@@ -11,7 +11,7 @@ class Scheduler():
     def __init__(self, detector, booter, detect_minute=5, get_minute=20):
         self.detector = detector
         self.booter = booter
-        self.detect_minute = detect_minute * 60
+        self.detect_minute = detect_minute * 20
         self.get_minute = get_minute * 60
         self.DETECT = True
         self.GETTER = True
