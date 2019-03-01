@@ -41,6 +41,8 @@ threshold=1.000
 quantity=20  
 # proxy capacity
 capacity=1000
+# If you need to test a specific 'url', you can fill in the following options     
+url=www.baidu.com
 
 # You could modify detector and proxy getter running cycle in there.
 [other]

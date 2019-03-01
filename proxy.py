@@ -27,7 +27,7 @@ GET_NUM = None
 THRESHOLD = None
 QUANTITY = None
 CAPACITY = None
-
+TEST_URL = None
 
 
 
@@ -66,7 +66,7 @@ def parse_config(path='proxy.conf'):
     global QUANTITY
     global THRESHOLD
     global CAPACITY
-    
+    global TEST_URL
 
     REDIS_HOST = try_to_get_options(cfg.get, 'redis', 'host')
     REDIS_PORT = try_to_get_options(cfg.getint, 'redis', 'port')
@@ -83,7 +83,7 @@ def parse_config(path='proxy.conf'):
     QUANTITY = try_to_get_options(cfg.getint, 'proxy_setting', 'quantity')
     THRESHOLD = try_to_get_options(cfg.getfloat, 'proxy_setting', 'threshold')
     CAPACITY = try_to_get_options(cfg.getfloat, 'proxy_setting', 'capacity')
-    
+    TEST_URL = try_to_get_options(cfg.get, 'proxy_setting', 'url')
 
 
 def parse_cmd():
@@ -120,7 +120,7 @@ def init_module():
     global redis_client
     redis_client = RedisClient(host=REDIS_HOST, port=REDIS_PORT, password=REDIS_PASSWORD, s_key=REDIS_KEY, num=GET_NUM)
     xc = XiCiProxyHelper(quantity=QUANTITY, threshold=THRESHOLD)
-    detector = Detector(redis_client)
+    detector = Detector(redis_client, test_url=TEST_URL)
     booter = Booter(redis_client, xc, capacity=CAPACITY)
 
 

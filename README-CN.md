@@ -38,6 +38,8 @@ threshold=1.000
 quantity=20  
 # 代理池的总容量
 capacity=1000
+# 如果你有特定的连接测试可以填入以下选项 
+url=www.baidu.com
 
 # 一些其他参数配置
 [other]
