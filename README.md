@@ -11,9 +11,13 @@ This is a proxy server which can build quick and easy, it able to continuously o
 
 After installing all the packages in `requirements.txt`, type `python proxy -d` at the command line. Finally, obtain proxies by open `${host}:${port}/get`
 
+## Remove data 
+if you want to remove redundancy data, you could run `clear_db.py`
+
 
 ## Config File
 When you use the arguments `-d` to start server, server will automatic to load all config in default file `proxy.conf`. You can also pass your custom configuration file using `-c configpath`. The parameters are briefly described below.
+
 
 ```
 # Redis client config
