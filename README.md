@@ -9,7 +9,7 @@ This is a proxy server which can build quick and easy, it able to continuously o
 
 ## Quick Start
 
-After installing all the packages in `requirements.txt`, type `python proxy -d` at the command line. Finally, obtain proxies by open `${host}:${port}/get`
+After installing all the packages in `requirements.txt`, type `python proxy.py -d` at the command line. Finally, obtain proxies by open `${host}:${port}/get`
 
 ## Remove data 
 if you want to remove redundancy data, you could run `clear_db.py`
